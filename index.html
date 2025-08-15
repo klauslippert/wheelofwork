@@ -77,7 +77,13 @@ const wheelData = [
   { "title": "", "text": "Bescheidenheit" },
   { "title": "", "text": "Wahrhaftigkeit" },
   { "title": "", "text": "Gemeinschaft" },
-  { "title": "", "text": "Gelassenheit" }
+  { "title": "", "text": "Gelassenheit" },
+  { "title": "", "text": "Einfach da sein" },
+    { "title": "", "text": "Einfach da sein" },
+    { "title": "", "text": "Einfach da sein" },
+    { "title": "", "text": "Einfach da sein" },
+    { "title": "", "text": "Einfach da sein" },
+    { "title": "", "text": "Einfach da sein" }
 ];
 
 const canvas = document.getElementById('wheel');
@@ -99,7 +105,8 @@ function drawWheel() {
   for (let i = 0; i < slices; i++) {
     ctx.beginPath();
     ctx.moveTo(200, 200);
-    ctx.arc(200, 200, 200, i * sliceAngle, (i + 1) * sliceAngle);
+    ctx.arc(200, 200, 200, i * sliceAn
+            gle, (i + 1) * sliceAngle);
     ctx.fillStyle = i % 2 === 0 ? '#e03a0d' : '#388285';
     ctx.fill();
     ctx.save();
