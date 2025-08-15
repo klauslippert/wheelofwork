@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Wheel of Fortune</title>
+<title>Tagesaufgabe</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -70,14 +70,19 @@
 <script>
 // --- Wheel data: title for wheel, text for overlay ---
 const wheelData = [
-  { "title": "", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-  { "title": "", "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-  { "title": "", "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
-  { "title": "", "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore." },
-  { "title": "", "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia." },
-  { "title": "", "text": "Mollit anim id est laborum. Curabitur pretium tincidunt lacus." },
-  { "title": "", "text": "Nulla facilisi. Donec nec justo eget felis facilisis fermentum." },
-  { "title": "", "text": "Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis." }
+  { "title": "", "text": "Herzlichkeit" },
+  { "title": "", "text": "Persönliche Zuwendung" },
+  { "title": "", "text": "Dankbarkeit" },
+  { "title": "", "text": "Verantwortungsbewusstsein" },
+  { "title": "", "text": "Bescheidenheit" },
+  { "title": "", "text": "Wahrhaftigkeit" },
+  { "title": "", "text": "Gemeinschaft" },
+  { "title": "", "text": "Gelassenheit" },
+  { "title": "", "text": "Einfach da sein" },
+  { "title": "", "text": "Einfach da sein" },
+  { "title": "", "text": "Einfach da sein" },
+  { "title": "", "text": "Einfach da sein" }
+  
 ];
 
 const canvas = document.getElementById('wheel');
@@ -89,9 +94,9 @@ let spinning = false;
 let spinVelocity = 0;
 
 // Particle system
-const particlesCanvas = document.getElementById('particles');
+const particlesCanvas = docuId('particles');
 const pctx = particlesCanvas.getContext('2d');
-particlesCanvas.width = window.innerWidth;
+paras.width = window.innerWidth;
 particlesCanvas.height = window.innerHeight;
 let particles = [];
 
