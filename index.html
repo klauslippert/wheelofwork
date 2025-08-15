@@ -70,14 +70,14 @@
 <script>
 // --- Wheel data: title for wheel, text for overlay ---
 const wheelData = [
-  { "title": "Prize 1", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-  { "title": "Prize 2", "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-  { "title": "Prize 3", "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
-  { "title": "Prize 4", "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore." },
-  { "title": "Prize 5", "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia." },
-  { "title": "Prize 6", "text": "Mollit anim id est laborum. Curabitur pretium tincidunt lacus." },
-  { "title": "Prize 7", "text": "Nulla facilisi. Donec nec justo eget felis facilisis fermentum." },
-  { "title": "Prize 8", "text": "Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis." }
+  { "title": "", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+  { "title": "", "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { "title": "", "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+  { "title": "", "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore." },
+  { "title": "", "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia." },
+  { "title": "", "text": "Mollit anim id est laborum. Curabitur pretium tincidunt lacus." },
+  { "title": "", "text": "Nulla facilisi. Donec nec justo eget felis facilisis fermentum." },
+  { "title": "", "text": "Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis." }
 ];
 
 const canvas = document.getElementById('wheel');
@@ -119,7 +119,7 @@ function drawNeedle() {
   ctx.lineTo(190, 30);
   ctx.lineTo(210, 30);
   ctx.closePath();
-  ctx.fillStyle = "red";
+  ctx.fillStyle = "black";
   ctx.fill();
   ctx.beginPath();
   ctx.arc(200, 30, 5, 0, 2*Math.PI);
