@@ -89,9 +89,9 @@ let spinning = false;
 let spinVelocity = 0;
 
 // Particle system
-const particlesCanvas = docuId('particles');
+const particlesCanvas = document.getElementById('particles');
 const pctx = particlesCanvas.getContext('2d');
-paras.width = window.innerWidth;
+particlesCanvas.width = window.innerWidth;
 particlesCanvas.height = window.innerHeight;
 let particles = [];
 
