@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wheel of Fortune</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    background: #f0f0f0;
+  }
+  canvas#wheel {
+    margin-top: 20px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.4);
+    overflow: visible;
+    display: none;
+  }
+
+  #overlay-content {
+    background: white;
+    padding: 30px;
+    font-size: 20px;
+    border-radius: 10px;
+    max-width: 80%;
+    z-index: 10; /* on top of particles */
+    position: relative;
+    word-wrap: break-word;
+  }
+
+  #particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 5; /* behind overlay content */
+  }
+</style>
+</head>
+<body>
+
+<h1>Wheel of Fortune</h1>
+<canvas id="wheel" width="400" height="400"></canvas>
+<br>
+<button id="spin">Spin!</button>
+
+<div id="overlay">
+  <canvas id="particles"></canvas>
+  <div id="overlay-content"></div>
+</div>
+
+<script>
+// --- Wheel data: title for wheel, text for overlay ---
+const wheelData = [
+  { "title": "Prize 1", "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+  { "title": "Prize 2", "text": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  { "title": "Prize 3", "text": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+  { "title": "Prize 4", "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore." },
+  { "title": "Prize 5", "text": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia." },
+  { "title": "Prize 6", "text": "Mollit anim id est laborum. Curabitur pretium tincidunt lacus." },
+  { "title": "Prize 7", "text": "Nulla facilisi. Donec nec justo eget felis facilisis fermentum." },
+  { "title": "Prize 8", "text": "Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis." }
+];
+
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+const slices = wheelData.length;
+const sliceAngle = 2 * Math.PI / slices;
+let angle = 0;
+let spinning = false;
+let spinVelocity = 0;
+
+// Particle system
+const particlesCanvas = document.getElementById('particles');
+const pctx = particlesCanvas.getContext('2d');
+particlesCanvas.width = window.innerWidth;
+particlesCanvas.height = window.innerHeight;
+let particles = [];
+
+function drawWheel() {
+  for (let i = 0; i < slices; i++) {
+    ctx.beginPath();
+    ctx.moveTo(200, 200);
+    ctx.arc(200, 200, 200, i * sliceAngle, (i + 1) * sliceAngle);
+    ctx.fillStyle = i % 2 === 0 ? '#f9c74f' : '#90be6d';
+    ctx.fill();
+    ctx.save();
+    ctx.translate(200, 200);
+    ctx.rotate(i * sliceAngle + sliceAngle / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#000";
+    ctx.font = "18px Arial";
+    ctx.fillText(wheelData[i].title, 180, 10);
+    ctx.restore();
+  }
+}
+
+function drawNeedle() {
+  ctx.beginPath();
+  ctx.moveTo(200, 0);
+  ctx.lineTo(190, 30);
+  ctx.lineTo(210, 30);
+  ctx.closePath();
+  ctx.fillStyle = "red";
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(200, 30, 5, 0, 2*Math.PI);
+  ctx.fillStyle = "black";
+  ctx.fill();
+}
+
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(200, 200);
+  ctx.rotate(angle);
+  ctx.translate(-200, -200);
+  drawWheel();
+  ctx.restore();
+  drawNeedle();
+}
+
+function spinWheel() {
+  if (spinning) return;
+  spinning = true;
+  spinVelocity = Math.random() * 0.2 + 0.25;
+  animateSpin();
+}
+
+function animateSpin() {
+  if (spinVelocity > 0.002) {
+    angle += spinVelocity;
+    spinVelocity *= 0.98;
+    render();
+    requestAnimationFrame(animateSpin);
+  } else {
+    spinning = false;
+    let degrees = (angle * 180 / Math.PI) % 360;
+    if (degrees < 0) degrees += 360;
+    let adjusted = (degrees + 90) % 360;
+    let index = Math.floor((360 - adjusted) / (360 / slices)) % slices;
+    showOverlay(wheelData[index].text);
+    launchParticles();
+  }
+}
+
+function showOverlay(content) {
+  document.getElementById('overlay-content').textContent = content;
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+// Particle system
+function launchParticles() {
+  particles = [];
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+  for (let i = 0; i < 200; i++) {
+    particles.push({
+      x: centerX,
+      y: centerY,
+      radius: Math.random() * 8 + 4,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      speedX: (Math.random() - 0.5) * 12,
+      speedY: (Math.random() - 0.5) * 12,
+      life: 80
+    });
+  }
+  requestAnimationFrame(animateParticles);
+}
+
+function animateParticles() {
+  pctx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+  particles.forEach((p, i) => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.speedY += 0.1; // gravity
+    p.life--;
+    pctx.beginPath();
+    pctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    pctx.fillStyle = p.color;
+    pctx.fill();
+    if (p.life <= 0) particles.splice(i, 1);
+  });
+  if (particles.length > 0) requestAnimationFrame(animateParticles);
+}
+
+document.getElementById('spin').addEventListener('click', spinWheel);
+document.getElementById('overlay').addEventListener('click', function() {
+  this.style.display = 'none';
+});
+
+render();
+</script>
+
+</body>
+</html>
