@@ -105,8 +105,7 @@ function drawWheel() {
   for (let i = 0; i < slices; i++) {
     ctx.beginPath();
     ctx.moveTo(200, 200);
-    ctx.arc(200, 200, 200, i * sliceAn
-            gle, (i + 1) * sliceAngle);
+    ctx.arc(200, 200, 200, i * sliceAngle, (i + 1) * sliceAngle);
     ctx.fillStyle = i % 2 === 0 ? '#e03a0d' : '#388285';
     ctx.fill();
     ctx.save();
